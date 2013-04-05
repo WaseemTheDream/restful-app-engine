@@ -32,7 +32,7 @@
   ];
   Book = Backbone.Model.extend({
     defaults: {
-      coverImage: "img/placeholder.jpg",
+      coverImage: "/static/img/placeholder.jpg",
       title: "No title",
       author: "Unknown",
       releaseDate: "Unknown",
