@@ -19,12 +19,8 @@ def main():
     books = json.loads(json_data)['books']
 
     print 'Loading books into database...'
-    for book_json in books:
-        book = Books.Book()
-        book.load_json(book_json)
-        book.put()
-        print 'Loaded', book.title
-
+    map(lambda book: Books.post_book(book), books)
+    
     print 'Done loading.'
 
 if __name__ == '__main__':

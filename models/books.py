@@ -19,13 +19,24 @@ class Book(db.Model):
     json_attributes = ['title', 'author', 'release_date', 'keywords']
 
     def load_json(self, json):
-        for key, value in json.items():
-            setattr(self, key, value)
+        def load(key, value):
+            if key in self.json_attributes:
+                setattr(self, key, value)
+        print json.items()
+        map(lambda arg: load(*arg), json.items())
 
     def to_json(self):
         json = {}
-        for attr in self.json_attributes:
-            json[attr] = getattr(self, attr)
+        map(lambda attr: json.update({attr: getattr(self, attr)}),
+            self.json_attributes)
         return json
 
 
+def get_books():
+    return map(lambda book: book.to_json(), Book.all())
+
+def post_book(book_json):
+    book = Book()
+    book.load_json(book_json)
+    book.put()
+    return book
