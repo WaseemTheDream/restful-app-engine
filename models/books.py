@@ -29,14 +29,18 @@ class Book(db.Model):
         json = {}
         map(lambda attr: json.update({attr: getattr(self, attr)}),
             self.json_attributes)
+        json['key'] = str(self.key())
         return json
 
 
 def get_books():
     return map(lambda book: book.to_json(), Book.all())
 
+def get_book(key):
+    return Book.get(key).to_json()
+
 def post_book(book_json):
     book = Book()
     book.load_json(book_json)
     book.put()
-    return book
+    return str(book.key())
