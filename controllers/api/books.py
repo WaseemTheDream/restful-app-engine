@@ -39,7 +39,8 @@ class BooksHandler(webapp2.RequestHandler):
                 'keywords': "JavaScript"
             }
         ]
-        self.response.out.write(books)
+        self.response.headers["Content-Type"] = "application/json"
+        self.response.out.write(json.dumps(books))
 
 
 app = webapp2.WSGIApplication([

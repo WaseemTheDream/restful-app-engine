@@ -1,0 +1,30 @@
+{
+    "books": [
+        {
+            "title": "JS the good parts",
+            "author": "John Doe",
+            "release_date": "2012",
+            "keywords": "JavaScript"
+        }, {
+            "title": "CS the better parts",
+            "author": "John Doe",
+            "release_date": "2012",
+            "keywords": "CoffeeScript"
+        }, {
+            "title": "Scala for the impatient",
+            "author": "John Doe",
+            "release_date": "2012",
+            "keywords": "Scala"
+        }, {
+            "title": "American Psyco",
+            "author": "Bret Easton Ellis",
+            "releaseDate": "2012",
+            "keywords": "Novel"
+        }, {
+            "title": "Eloquent JavaScript",
+            "author": "John Doe",
+            "release_date": "2012",
+            "keywords": "JavaScript"
+        }
+    ]
+}
