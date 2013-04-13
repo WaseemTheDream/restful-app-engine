@@ -22,7 +22,6 @@ class Book(db.Model):
         def load(key, value):
             if key in self.json_attributes:
                 setattr(self, key, value)
-        print json.items()
         map(lambda arg: load(*arg), json.items())
 
     def to_json(self):
@@ -44,3 +43,13 @@ def post_book(book_json):
     book.load_json(book_json)
     book.put()
     return str(book.key())
+
+def put_book(key, book_json):
+    book = Book.get(key)
+    book.load_json(book_json)
+    book.put()
+    return str(book.key())
+
+def delete_book(key):
+    book = Book.get(key)
+    book.delete()
