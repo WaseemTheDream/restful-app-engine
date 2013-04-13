@@ -14,7 +14,12 @@
             author: "Unknown"
             releaseDate: "Unknown"
             keywords: "None"
+        idAttribute:"key"
         )
+        # parse: (response) ->
+        #     console.log(response)
+        #     # response.id = response.key
+        #     return response
 
     BookView = Backbone.View.extend(
         tagName: "div"
@@ -36,16 +41,20 @@
 
     Library = Backbone.Collection.extend(
         model: Book
+        url: '/api/books'
     )
 
     LibraryView = Backbone.View.extend(
         el: $("#books")
         initialize: ->
-            @collection = new Library(books)
+            # @collection = new Library(books)
+            @collection = new Library()
+            @collection.fetch()
             @render()
 
             @collection.on("add", @renderBook, @)
             @collection.on("remove", @removeBook, @)
+            @collection.on("reset", @render, @)
 
         render: ->
             that = @
@@ -61,7 +70,7 @@
                     formData[el.id] = $(el).val()
             )
             books.push(formData)
-            @collection.add(new Book(formData))
+            @collection.create(new Book(formData))
 
         removeBook: (removedBook) ->
             removedBookData = removedBook.attributes

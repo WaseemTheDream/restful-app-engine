@@ -37,7 +37,8 @@
       author: "Unknown",
       releaseDate: "Unknown",
       keywords: "None"
-    }
+    },
+    idAttribute: "key"
   });
   BookView = Backbone.View.extend({
     tagName: "div",
@@ -58,15 +59,18 @@
     }
   });
   Library = Backbone.Collection.extend({
-    model: Book
+    model: Book,
+    url: '/api/books'
   });
   LibraryView = Backbone.View.extend({
     el: $("#books"),
     initialize: function() {
-      this.collection = new Library(books);
+      this.collection = new Library();
+      this.collection.fetch();
       this.render();
       this.collection.on("add", this.renderBook, this);
-      return this.collection.on("remove", this.removeBook, this);
+      this.collection.on("remove", this.removeBook, this);
+      return this.collection.on("reset", this.render, this);
     },
     render: function() {
       var that;
@@ -85,7 +89,7 @@
         }
       });
       books.push(formData);
-      return this.collection.add(new Book(formData));
+      return this.collection.create(new Book(formData));
     },
     removeBook: function(removedBook) {
       var removedBookData;
