@@ -9,17 +9,16 @@ import json
 import logging
 import webapp2
 
-from models import Books
+from models import books
 
-class BooksHandler(webapp2.RequestHandler):
+class booksHandler(webapp2.RequestHandler):
     def get(self):
         def get_books():
-            books = Books.get_books()
-            self.json_out(books)
+            self.json_out(books.get_books())
 
         def get_book():
             book_key = self.get_key()
-            book = Books.get_book(book_key)
+            book = books.get_book(book_key)
             self.json_out(book)
 
         if self.request.uri.endswith('books'):
@@ -29,18 +28,18 @@ class BooksHandler(webapp2.RequestHandler):
 
     def post(self):
         book_json = json.loads(self.request.body)
-        book_key = Books.post_book(book_json)
+        book_key = books.post_book(book_json)
         self.json_out(book_key)
 
     def put(self):
         book_json = json.loads(self.request.body)
         book_key = self.get_key()
-        book_key = Books.put_book(book_key, book_json)
+        book_key = books.put_book(book_key, book_json)
         self.json_out(book_key)
 
     def delete(self):
         book_key = self.get_key()
-        Books.delete_book(book_key)
+        books.delete_book(book_key)
 
 
     def get_key(self):
@@ -53,5 +52,5 @@ class BooksHandler(webapp2.RequestHandler):
         
 
 app = webapp2.WSGIApplication([
-    ('/api/books.*', BooksHandler)
+    ('/api/books.*', booksHandler)
 ], debug=True)
